@@ -31,15 +31,18 @@ class CryptoPresenter : AnyPresenter {
         
         switch result {
         case.success(let cryptos) :
-            print("updeate succesfull")
+            view?.update(with: cryptos)
             
-        case .failure(let error):
-            
-            print("error")
+        case .failure(_):
+            view?.update(with: "URL is silly...")
         }
     }
     
-    var interactor: AnyInteractor?
+    var interactor: AnyInteractor? {
+        didSet{
+            interactor?.downloadCryptos()
+        }
+    }
     
     var view: AnyView?
     
